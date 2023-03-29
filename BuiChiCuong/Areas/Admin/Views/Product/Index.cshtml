@@ -1,0 +1,95 @@
+﻿@model IEnumerable<BuiChiCuong.Context.Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <link href="~/Content/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+@section footer{
+    <script src="~/Content/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#prtable').DataTable();
+        });
+    </script>
+}
+
+    <h2>Products</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+        @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+{
+<p>
+    Tim kiem san pham: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string )
+    <input type="submit" value=" Tim kiem "/>
+    </p>
+}
+
+    <table class="table" id="prtable">
+        <thead>
+            <tr>
+                <th>
+                    Category Name
+                </th>
+                <th>
+                    Product Name
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Avatar)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShortDes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PriceDiscount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Deleted)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+     
+
+        @foreach (var item in Model)
+        {
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <img src="~/Content/images/items/@Html.DisplayFor(Item => item.Avatar)" width="30%">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ShortDes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PriceDiscount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Deleted)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
